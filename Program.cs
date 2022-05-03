@@ -36,16 +36,28 @@ namespace Habit_Tracker
 
 
                     //Deleting the latest entry
-                     cmd.CommandText = "DELETE FROM MyTable WHERE ID=(SELECT MAX(id) FROM MyTable)";
-                     cmd.ExecuteNonQuery();
+                     //cmd.CommandText = "DELETE FROM MyTable WHERE ID=(SELECT MAX(id) FROM MyTable)";
+                     //cmd.ExecuteNonQuery();
+                    
 
                     //Deleting a specific entry
                     Console.WriteLine("What entry do you want to delete?");
                     int id = Convert.ToInt32(Console.ReadLine());
-                    cmd.CommandText = "DELETE FROM MyTable WHERE Id=@idvalue.ToString()";
+                    cmd.CommandText = "DELETE FROM MyTable WHERE Id=@idvalue";
                     cmd.Parameters.AddWithValue("@idvalue", id);
                     cmd.ExecuteNonQuery();
 
+                    //Updating an entry
+                    Console.WriteLine("What entry do you want to update?");
+                    int idUpdate = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("What is the new Gender?");
+                    string genderUpdate = Console.ReadLine();
+                    cmd.CommandText = "UPDATE MyTable set Gender = @newGender WHERE Id = @idvalue";
+                    cmd.Parameters.AddWithValue("@idvalue", idUpdate);
+                    cmd.Parameters.AddWithValue("@newGender", genderUpdate);
+                    cmd.ExecuteNonQuery();
+
+                    //Displays all records
                     cmd.CommandText = "SELECT * from MyTable";
                     using (System.Data.SQLite.SQLiteDataReader reader = cmd.ExecuteReader())
                     {
