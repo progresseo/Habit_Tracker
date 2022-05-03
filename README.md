@@ -4,7 +4,8 @@
  > I had already installed Visual Studio, GitDesktop, made a github profile. 
  > Created a new project in VS and comitted it. 
  > Install SQLite and created a db. Got confused between .db and .sqppro files. This was because I was clicking on save project after creating and editing the database. Saving a project creates a .sqppro. This took me a while to figure out. Just press ctrl+s to save and close database, don't click save project.
- 
+ >For the porject a database is created from VS so no need to create separate .db file. 
+
  > Pasted the code from csharacademy. Got lots of errors! Got very confused. 
   > Followed youtube tutorial on how to make a SQLite connection. https://www.youtube.com/watch?v=APVit-pynwQ&ab_channel=DevNami
   Managed to install a Nuget Package. Realised that I have to pull in the SQLite library by adding using at the top. 
@@ -15,6 +16,8 @@
  >getting error that connection is not opening so going to just follow the youtube tutorial to make the connection instead. Using a System.Data.SQLite nuget package
  >Managed to add entry to  the database
  >getting errors when trying to delete a specific entry
+
+ >Shows CRUD 
  >https://www.youtube.com/watch?v=_JJwHXZcE4Y
 
  > Had installed the professional version of Visual Studio, trial ran out so had to uninstall and install the community version. 
@@ -22,5 +25,10 @@
 
  >Deleting specific entry worked. Make sure the user input is set properly. 
  >Managed to get all the CRUD fucntions working. 
- > Need to put then in classes so I can link it to the main menu.
+ > Need to put them in methods so I can link it to the main menu.
+ >Methods tutorial: https://www.youtube.com/watch?v=MkDroqxS8LY
+ >Then just used the errors to guide me. Have to open and close connections in each method.
 
+>Create a menu using switch statement. https://www.w3schools.com/cs/cs_switch.php 
+
+>next time: add in actual columns e.g data instead of name and gender and then data validation
