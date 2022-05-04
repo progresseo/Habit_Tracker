@@ -11,8 +11,8 @@ namespace Habit_Tracker
             string createQuery = @"CREATE TABLE IF NOT EXISTS
                                 [MyTable] (
                                 [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                                [Name] NVARCHAR(2048) NULL,
-                                [Gender] NVARCHAR(2048) NULL)";
+                                [Date] TEXT,
+                                [Quantity] INTEGER)";
             //System.Data.SQLite.SQLiteConnection.CreateFile("test1.db3");
             using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection("data source=test1.db3"))
             {
@@ -22,24 +22,28 @@ namespace Habit_Tracker
                     cmd.CommandText = createQuery;
                     cmd.ExecuteNonQuery();
 
-
-                    //Menu for users
-                    Console.WriteLine(" Please select 1 to add an entry. \n Please select 2 to update an entry \n Please select 3 to delete an entry \n Please select 4 to show all entries \n Please select 0 to exit");
-                    int optionChosen = Convert.ToInt32(Console.ReadLine());
-                    switch (optionChosen)
+                    bool closeConnection = false;
+                    while(closeConnection == false)
                     {
-                        case 1: InputInfo(); break;
-                        case 2: Update();  break;
-                        case 3: Delete();  break;
-                        case 4: DisplayAll(); break;
-                        default:
-                            conn.Close();
-                            break;
-                    }
-                    
-                    
-                    
-                    
+                        //Menu for users
+                        Console.WriteLine(" Please enter 1 to add an entry. \n Please enter 2 to update an entry \n Please enter 3 to delete an entry \n Please enter 4 to show all entries \n Please select 0 to exit");
+                        int optionChosen = Convert.ToInt32(Console.ReadLine());
+                        switch (optionChosen)
+                        {
+                            case 0: closeConnection = true;   break;
+                            case 1: InputInfo(); break;
+                            case 2: Update(); break;
+                            case 3: Delete(); break;
+                            case 4: DisplayAll(); break;
+                            default:
+                                Console.WriteLine("Please enter numbers between 0-4");
+                                break;
+                        }
+                    } 
+
+
+
+
 
 
                     //Deleting the latest entry
@@ -66,18 +70,36 @@ namespace Habit_Tracker
             {
                 using (System.Data.SQLite.SQLiteCommand cmd = new System.Data.SQLite.SQLiteCommand(conn))
                 {
+
                     conn.Open();
                     //Inputing information
-                    Console.WriteLine("what is your name?");
-                    string name = Console.ReadLine();
-                    Console.WriteLine("What is your gender?");
-                    string gender = Console.ReadLine();
+                    Console.WriteLine("Enter the date");
+                    string date = Console.ReadLine();
+                    //if (DateTime.TryParseExact(date, "dd MMM yyyy", out DateTime result))
+                    //{
 
-                    cmd.CommandText = "INSERT INTO MyTable(Name,Gender) values(@namevalue,@gendervalue)";
-                    cmd.Parameters.AddWithValue("@namevalue", name);
-                    cmd.Parameters.AddWithValue("@gendervalue", gender);
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
+                    //}else
+                    //{
+
+                    //}
+                        Console.WriteLine("How many glasses of water did you drink?");
+                    string quantity = Console.ReadLine();
+                    
+                    if (int.TryParse(quantity, out int result1))
+                    {
+                        cmd.CommandText = "INSERT INTO MyTable(Date,Quantity) values(@datevalue,@quantityvalue)";
+                        cmd.Parameters.AddWithValue("@datevalue", date);
+                        cmd.Parameters.AddWithValue("@quantityvalue", quantity);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please make sure to enter a number e.g 5, no decimals allowed");
+                       
+                    }
+
+                    
                 }
             }
         }
@@ -108,11 +130,11 @@ namespace Habit_Tracker
                     //Updating an entry
                     Console.WriteLine("What entry do you want to update?");
                     int idUpdate = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("What is the new Gender?");
-                    string genderUpdate = Console.ReadLine();
-                    cmd.CommandText = "UPDATE MyTable set Gender = @newGender WHERE Id = @idvalue";
+                    Console.WriteLine("How many glasses of water did you drink?");
+                    string quantityUpdate = Console.ReadLine();
+                    cmd.CommandText = "UPDATE MyTable set Quantity = @newQuantity WHERE Id = @idvalue";
                     cmd.Parameters.AddWithValue("@idvalue", idUpdate);
-                    cmd.Parameters.AddWithValue("@newGender", genderUpdate);
+                    cmd.Parameters.AddWithValue("@newQuantity", quantityUpdate);
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -120,6 +142,7 @@ namespace Habit_Tracker
         }
         static void DisplayAll()
         {
+            Console.Clear();
             using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection("data source=test1.db3"))
             {
                 using (System.Data.SQLite.SQLiteCommand cmd = new System.Data.SQLite.SQLiteCommand(conn))
@@ -129,9 +152,13 @@ namespace Habit_Tracker
                     cmd.CommandText = "SELECT * from MyTable";
                     using (System.Data.SQLite.SQLiteDataReader reader = cmd.ExecuteReader())
                     {
+                        Console.WriteLine(reader.GetName(0) + ":" + reader.GetName(1) + ":" + reader.GetName(2));
                         while (reader.Read())
                         {
-                            Console.WriteLine(reader["Id"] + ":" + reader["Name"] + ":" + reader["Gender"]);
+                            // Console.WriteLine(readerreader["Id"] + ":" + reader["Name"] + ":" + reader["Gender"]);
+                            
+                            Console.WriteLine(reader.GetValue(0) + ":" + reader.GetValue(1) + ":" + reader.GetValue(2));
+
                         }
                         
                     }

@@ -31,4 +31,15 @@
 
 >Create a menu using switch statement. https://www.w3schools.com/cs/cs_switch.php 
 
->next time: add in actual columns e.g data instead of name and gender and then data validation
+>Updated the show all method so it displays the column headers as well.
+>Updated the columns to be named date and quantity
+
+>Use a while loop in the menu to make sure the menu comes back after selecting each method, so you can do multiple things in the app without having to restart it. 
+
+>Not sure where to start with data validation
+>Searched for videos on data validation
+> Used tryparse and if function to validate quantity input
+>Looking into validating the date input using TryParseExact. Need to get the arguments right. Probably will have nested if's for this data validation for creating an entry.
+https://www.youtube.com/watch?v=hyXynrnxR-8&ab_channel=CPlus%2B
+
+https://zetcode.com/csharp/sqlite/ good SQLite explanation
