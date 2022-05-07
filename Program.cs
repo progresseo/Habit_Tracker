@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
+using System.Globalization;
 
 namespace Habit_Tracker
 {
@@ -73,33 +74,60 @@ namespace Habit_Tracker
 
                     conn.Open();
                     //Inputing information
-                    Console.WriteLine("Enter the date");
+                    Console.WriteLine("Enter the date in the format  e.g 21 June 2022");
                     string date = Console.ReadLine();
-                    //if (DateTime.TryParseExact(date, "dd MMM yyyy", out DateTime result))
-                    //{
 
-                    //}else
-                    //{
-
-                    //}
-                        Console.WriteLine("How many glasses of water did you drink?");
-                    string quantity = Console.ReadLine();
-                    
-                    if (int.TryParse(quantity, out int result1))
+                    bool conversion = DateTime.TryParseExact(date, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result4);
+                    if (conversion == true)
                     {
-                        cmd.CommandText = "INSERT INTO MyTable(Date,Quantity) values(@datevalue,@quantityvalue)";
                         cmd.Parameters.AddWithValue("@datevalue", date);
-                        cmd.Parameters.AddWithValue("@quantityvalue", quantity);
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
                     }
                     else
                     {
-                        Console.WriteLine("Please make sure to enter a number e.g 5, no decimals allowed");
-                       
-                    }
+                        while (conversion == false)
 
+                        {
+                            Console.WriteLine("Please make sure the date is in the correct format dd MMMM yyyy e.g 21 Aug 2022");
+                            string date2 = Console.ReadLine();
+                            if (DateTime.TryParseExact(date2, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result))
+                            {
+                                cmd.Parameters.AddWithValue("@datevalue", date2);
+                                conversion = true;
+
+                            }
+
+                        }
+                    }
                     
+                   
+                    Console.WriteLine("How many glasses of water did you drink?");
+                    string quantity = Console.ReadLine();
+                    bool conversionQuantity = int.TryParse(quantity, out int result1);
+                    if (conversionQuantity == true)
+                    {
+                        cmd.Parameters.AddWithValue("@quantityvalue", quantity);
+                    }
+                    else
+                    {
+                        while (conversionQuantity == false)
+                        {
+                            Console.WriteLine("Please make sure to enter a number e.g 5, no decimals allowed");
+                            string quantity2 = Console.ReadLine();
+                            if (int.TryParse(quantity2, out int result5))
+                            {
+                                cmd.Parameters.AddWithValue("@quantityvalue", quantity2);
+                                conversionQuantity = true;
+                            }
+                        }
+                    }
+                   
+                    
+                   
+                    cmd.CommandText = "INSERT INTO MyTable(Date,Quantity) values(@datevalue,@quantityvalue)";
+
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+
                 }
             }
         }
@@ -112,9 +140,30 @@ namespace Habit_Tracker
                     conn.Open();
                     //Deleting a specific entry
                     Console.WriteLine("What entry do you want to delete?");
-                    int id = Convert.ToInt32(Console.ReadLine());
-                    cmd.CommandText = "DELETE FROM MyTable WHERE Id=@idvalue";
-                    cmd.Parameters.AddWithValue("@idvalue", id);
+                    string date = Console.ReadLine();
+                    bool conversion = DateTime.TryParseExact(date, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result4);
+                    if (conversion == true)
+                    {
+                        cmd.Parameters.AddWithValue("@dateValue", date);
+                    }
+                    else
+                    {
+                        while (conversion == false)
+
+                        {
+                            Console.WriteLine("Please make sure the date is in the correct format dd MMMM yyyy e.g 21 Aug 2022");
+                            string date2 = Console.ReadLine();
+                            if (DateTime.TryParseExact(date2, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result))
+                            {
+                                cmd.Parameters.AddWithValue("@dateValue", date2);
+                                conversion = true;
+
+                            }
+
+                        }
+                    }
+                    cmd.CommandText = "DELETE FROM MyTable WHERE Date=@dateValue";
+                    
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
@@ -128,13 +177,54 @@ namespace Habit_Tracker
                 {
                     conn.Open();
                     //Updating an entry
-                    Console.WriteLine("What entry do you want to update?");
-                    int idUpdate = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter the date for the entry you want to update in the format  e.g 21 June 2022");
+                    string date = Console.ReadLine();
+
+                    bool conversion = DateTime.TryParseExact(date, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result4);
+                    if (conversion == true)
+                    {
+                        cmd.Parameters.AddWithValue("@dateValue", date);
+                    }
+                    else
+                    {
+                        while (conversion == false)
+
+                        {
+                            Console.WriteLine("Please make sure the date is in the correct format dd MMMM yyyy e.g 21 Aug 2022");
+                            string date2 = Console.ReadLine();
+                            if (DateTime.TryParseExact(date2, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result))
+                            {
+                                cmd.Parameters.AddWithValue("@dateValue", date2);
+                                conversion = true;
+
+                            }
+
+                        }
+                    }
+
+
                     Console.WriteLine("How many glasses of water did you drink?");
-                    string quantityUpdate = Console.ReadLine();
-                    cmd.CommandText = "UPDATE MyTable set Quantity = @newQuantity WHERE Id = @idvalue";
-                    cmd.Parameters.AddWithValue("@idvalue", idUpdate);
-                    cmd.Parameters.AddWithValue("@newQuantity", quantityUpdate);
+                    string quantity = Console.ReadLine();
+                    bool conversionQuantity = int.TryParse(quantity, out int result1);
+                    if (conversionQuantity == true)
+                    {
+                        cmd.Parameters.AddWithValue("@newQuantity", quantity);
+                    }
+                    else
+                    {
+                        while (conversionQuantity == false)
+                        {
+                            Console.WriteLine("Please make sure to enter a number e.g 5, no decimals allowed");
+                            string quantity2 = Console.ReadLine();
+                            if (int.TryParse(quantity2, out int result5))
+                            {
+                                cmd.Parameters.AddWithValue("@newQuantity", quantity2);
+                                conversionQuantity = true;
+                            }
+                        }
+                    }
+                    cmd.CommandText = "UPDATE MyTable set Quantity = @newQuantity WHERE Date = @dateValue";
+                  
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }

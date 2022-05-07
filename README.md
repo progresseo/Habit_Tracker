@@ -39,7 +39,9 @@
 >Not sure where to start with data validation
 >Searched for videos on data validation
 > Used tryparse and if function to validate quantity input
->Looking into validating the date input using TryParseExact. Need to get the arguments right. Probably will have nested if's for this data validation for creating an entry.
+>Looking into validating the date input using TryParseExact. 
 https://www.youtube.com/watch?v=hyXynrnxR-8&ab_channel=CPlus%2B
+
+/n need to make sure there aren't repeated entry!  and all the different results need to be sorted.
 
 https://zetcode.com/csharp/sqlite/ good SQLite explanation
