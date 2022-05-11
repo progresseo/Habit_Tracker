@@ -154,8 +154,29 @@ namespace Habit_Tracker
                     bool conversion = DateTime.TryParseExact(date, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result4);
                     if (conversion == true)
                     {
+                        cmd.CommandText = "SELECT * FROM MyTable";
+                        using (System.Data.SQLite.SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+                                if (reader["Date"].ToString() == date)
+                                {
+                                    Console.WriteLine("The entry has been found and deleted.");
+                                    cmd.Parameters.AddWithValue("@dateValue", date);
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The entry for this date does not exist.");
+                                    Delete();
+                                    break;
+
+                                }
+
+                            }
+                        }
                         
-                        cmd.Parameters.AddWithValue("@dateValue", date);
                     }
                     else
                     {
@@ -164,6 +185,7 @@ namespace Habit_Tracker
                         {
                             Console.WriteLine("Please make sure the date is in the correct format dd MMMM yyyy e.g 21 Aug 2022");
                             string date2 = Console.ReadLine();
+
                             if (DateTime.TryParseExact(date2, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result))
                             {
                                 
@@ -175,7 +197,7 @@ namespace Habit_Tracker
                                     {
                                         if (reader["Date"].ToString() == date2)
                                         {
-                                            Console.WriteLine("date exists");
+                                            Console.WriteLine("The entry has been found and deleted.");
                                             cmd.Parameters.AddWithValue("@dateValue", date2);
                                             break;
                                         }

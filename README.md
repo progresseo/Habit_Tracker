@@ -72,5 +72,6 @@ https://www.youtube.com/watch?v=JMlBU06QcI4&ab_channel=BIwithMina
 https://www.youtube.com/watch?v=ZJRg8nrNeeA&ab_channel=MikeDane (video on exception handling)
 
 >More validation- what if the record to delete or update doesn't exist - need a message!
+>There is dead end when I delete a record after I enter a date that doesn't exist.
 
 https://zetcode.com/csharp/sqlite/ good SQLite explanation
