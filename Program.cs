@@ -12,8 +12,9 @@ namespace Habit_Tracker
             string createQuery = @"CREATE TABLE IF NOT EXISTS
                                 [MyTable] (
                                 [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                                [Date] TEXT,
+                                [Date] TEXT unique,
                                 [Quantity] INTEGER)";
+            
             //System.Data.SQLite.SQLiteConnection.CreateFile("test1.db3");
             using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection("data source=test1.db3"))
             {
@@ -125,7 +126,16 @@ namespace Habit_Tracker
                    
                     cmd.CommandText = "INSERT INTO MyTable(Date,Quantity) values(@datevalue,@quantityvalue)";
 
-                    cmd.ExecuteNonQuery();
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                        Console.WriteLine("An entry for that date already exists.");
+                    }
+                    
+                    
                     conn.Close();
 
                 }
@@ -144,6 +154,7 @@ namespace Habit_Tracker
                     bool conversion = DateTime.TryParseExact(date, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result4);
                     if (conversion == true)
                     {
+                        
                         cmd.Parameters.AddWithValue("@dateValue", date);
                     }
                     else
@@ -155,7 +166,31 @@ namespace Habit_Tracker
                             string date2 = Console.ReadLine();
                             if (DateTime.TryParseExact(date2, "dd MMMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out DateTime result))
                             {
-                                cmd.Parameters.AddWithValue("@dateValue", date2);
+                                
+                                cmd.CommandText = "SELECT * FROM MyTable";
+                                using (System.Data.SQLite.SQLiteDataReader reader = cmd.ExecuteReader())
+                                {
+
+                                    while (reader.Read())
+                                    {
+                                        if (reader["Date"].ToString() == date2)
+                                        {
+                                            Console.WriteLine("date exists");
+                                            cmd.Parameters.AddWithValue("@dateValue", date2);
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("doesn't exist");
+                                            Delete();
+                                            break;
+
+                                        }
+
+                                    }
+                                }
+
+
                                 conversion = true;
 
                             }
@@ -164,11 +199,13 @@ namespace Habit_Tracker
                     }
                     cmd.CommandText = "DELETE FROM MyTable WHERE Date=@dateValue";
                     
+                    
                     cmd.ExecuteNonQuery();
                     conn.Close();
                 }
             }
         }
+        
         static void Update()
         {
             using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection("data source=test1.db3"))
@@ -245,7 +282,7 @@ namespace Habit_Tracker
                         Console.WriteLine(reader.GetName(0) + ":" + reader.GetName(1) + ":" + reader.GetName(2));
                         while (reader.Read())
                         {
-                            // Console.WriteLine(readerreader["Id"] + ":" + reader["Name"] + ":" + reader["Gender"]);
+                            // Console.WriteLine(reader["Id"] + ":" + reader["Name"] + ":" + reader["Gender"]);
                             
                             Console.WriteLine(reader.GetValue(0) + ":" + reader.GetValue(1) + ":" + reader.GetValue(2));
 
