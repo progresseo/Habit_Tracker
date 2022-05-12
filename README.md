@@ -1,5 +1,27 @@
 # Habit_Tracker
- Recording my journey to complete this first project! 
+ ##Console Habit Tracker
+ 
+ Project Outline: https://www.thecsharpacademy.com/habit-tracker/
+
+ The project makes a SQLite database connection, creates a database if one doesn't exist. 
+
+ The user is shown a menu of options in the console where they can choose to Create, Read, Update and Delete entries as well as exit the console. 
+ 
+ This app is to record the number of galsses of water drunk in a day. It records the date in dd MMMM yyyy format and quantity as an interger. 
+ 
+ The input from the user is check for the correct format. If incorrect, user is prompted to try again.
+ 
+ When creating an entry, a check is done to stop duplication. Once created, the user is taken back to main menu.
+ 
+ When deleting and updating, a check is done to see if the entry exists. If it doesn't exist or once the function is complete, the user is taken to main menu.
+ 
+
+
+
+
+##Journal on how I've tackled the project, challenges and resources I've used for each challenge. 
+
+Recording my journey to complete this first project! 
 
  > I had already installed Visual Studio, GitDesktop, made a github profile. 
 
@@ -38,6 +60,7 @@
  
  >Came back from a break from coding; getting distracted by the fact that I can't find documentation for System.Data.SQLite, can't really understand microsoft documentation so trying to focus on actually doing what I need to do for the porject
 
+ 
  >Deleting specific entry worked. Make sure the user input is set properly. 
  
  >Managed to get all the CRUD fucntions working. 
@@ -71,7 +94,8 @@ https://www.youtube.com/watch?v=JMlBU06QcI4&ab_channel=BIwithMina
 > To stop the crash and deal with the exception use Try {} catch{}. If there is a duplicate entry it gives you a message to tell you what the error is and then takes you to the beginning to try again instaed of crashing the app.
 https://www.youtube.com/watch?v=ZJRg8nrNeeA&ab_channel=MikeDane (video on exception handling)
 
->More validation- what if the record to delete or update doesn't exist - need a message!
->There is dead end when I delete a record after I enter a date that doesn't exist.
+> To check entry exists before updating or deleting, used a while function to go through all the dates and match it with date entered. Use the Try {} catch {} to go back to main menu if entry doesn't exist.
+
+>Good video on how to use try parse! https://www.youtube.com/watch?v=w7IGs7mh0d4&ab_channel=CoffeeNCode
 
 https://zetcode.com/csharp/sqlite/ good SQLite explanation
