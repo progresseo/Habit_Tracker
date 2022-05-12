@@ -9,7 +9,7 @@
  
  This app is to record the number of galsses of water drunk in a day. It records the date in dd MMMM yyyy format and quantity as an interger. 
  
- The input from the user is check for the correct format. If incorrect, user is prompted to try again.
+ The input from the user is checked for the correct format. If incorrect, user is prompted to try again.
  
  When creating an entry, a check is done to stop duplication. Once created, the user is taken back to main menu.
  
