@@ -168,8 +168,8 @@ namespace Habit_Tracker
                                 }
                                 else
                                 {
-                                    Console.WriteLine("The entry for this date does not exist.");
-                                    Delete();
+                                    Console.WriteLine("The entry for this date does not exist.\n");
+                                    
                                     break;
 
                                 }
@@ -203,8 +203,8 @@ namespace Habit_Tracker
                                         }
                                         else
                                         {
-                                            Console.WriteLine("doesn't exist");
-                                            Delete();
+                                            Console.WriteLine("The entry for this date does not exist.\n");
+                                            
                                             break;
 
                                         }
@@ -220,10 +220,23 @@ namespace Habit_Tracker
                         }
                     }
                     cmd.CommandText = "DELETE FROM MyTable WHERE Date=@dateValue";
-                    
-                    
-                    cmd.ExecuteNonQuery();
+
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch
+                    {
+                        
+                    }
+
+
                     conn.Close();
+
+
+
+
                 }
             }
         }
