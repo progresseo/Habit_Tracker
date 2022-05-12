@@ -1,5 +1,5 @@
 # Habit_Tracker
- ##Console Habit Tracker
+ ## Console Habit Tracker
  
  Project Outline: https://www.thecsharpacademy.com/habit-tracker/
 
@@ -19,7 +19,7 @@
 
 
 
-##Journal on how I've tackled the project, challenges and resources I've used for each challenge. 
+## Journal on how I've tackled the project, challenges and resources I've used for each challenge. 
 
 Recording my journey to complete this first project! 
 
